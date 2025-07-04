@@ -1,41 +1,25 @@
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
+import React from 'react';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
 
-import React, { Component } from 'react';
+function Box() {
+  return (
+    <mesh>
+      <boxGeometry args={[2, 2, 2]} />
+      <meshStandardMaterial color="orange" />
+    </mesh>
+  );
+}
 
-import PropTypes from 'prop-types';
-import load from 'absoluteLoad';
-
-export default class App extends Component {
-  static propTypes = {
-    onReady: PropTypes.func.isRequired,
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = { users: [] };
-  }
-
-  async componentDidMount() {
-    const users = load();
-    this.setState({ users });
-  }
-
-  componentDidUpdate() {
-    this.props.onReady();
-  }
-
-  render() {
-    return (
-      <div>
-        {this.state.users.map(user => (
-          <div key={user.id}>{user.name}</div>
-        ))}
-      </div>
-    );
-  }
+export default function App() {
+  return (
+    <div style={{ height: '100vh', width: '100vw' }}>
+      <Canvas>
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} />
+        <Box />
+        <OrbitControls />
+      </Canvas>
+    </div>
+  );
 }
